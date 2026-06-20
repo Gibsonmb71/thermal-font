@@ -2,7 +2,8 @@
 Scalable TrueType conversions of Thermal Sans Mono, plus a double-width variant inspired by thermal receipt printer modes.
 
 ## Download
-Download on the [Releases]([url](https://github.com/Gibsonmb71/thermal-font/releases)) page
+Download on the [Releases](https://github.com/Gibsonmb71/thermal-font/releases) page
+
 ZIP archive made with GitHub Actions for transparency
 ## Included fonts
 
