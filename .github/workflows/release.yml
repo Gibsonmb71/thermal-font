@@ -1,0 +1,45 @@
+name: Release fonts
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out tagged source
+        uses: actions/checkout@v4
+
+      - name: Build download ZIP
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          mkdir dist
+          cp ThermalTicket-*.ttf dist/
+
+          for file in LICENSE NOTICE.md README.md; do
+            if [ -f "$file" ]; then
+              cp "$file" dist/
+            fi
+          done
+
+          (
+            cd dist
+            zip -r "../Thermal-Ticket-Fonts-${GITHUB_REF_NAME}.zip" .
+          )
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${GITHUB_REF_NAME}" \
+            "Thermal-Ticket-Fonts-${GITHUB_REF_NAME}.zip" \
+            --title "Thermal Ticket Fonts ${GITHUB_REF_NAME}" \
+            --generate-notes
